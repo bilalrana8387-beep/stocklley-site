@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stocklley — Supply Chain & Inventory Management for Amazon Sellers</title>
+<meta name="description" content="Stocklley helps Amazon sellers and the agencies who manage them plan replenishment, track FBA and 3PL inventory, and reconcile Amazon payouts in one place.">
+<style>
+  :root { --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --brand:#3f9ba0; --bg:#fafafa; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background:#fff; line-height:1.6; }
+  header { background: #16232e; color:#fff; padding: 12px 24px; display:flex; align-items:center; justify-content:space-between; }
+  header .brand { display:flex; align-items:center; gap:10px; }
+  header .brand svg { display:block; height:52px; width:auto; }
+  header .brand .wordmark { font-family: Georgia, 'DejaVu Serif', serif; font-size:30px; font-weight:600; color:#fff; }
+  header nav a { color:#cbd5e1; text-decoration:none; margin-left:22px; font-size:14px; }
+  header nav a:hover { color:#fff; }
+  .hero { background: linear-gradient(135deg,#16232e,#22343f); color:#fff; padding: 64px 24px 56px; text-align:center; }
+  .hero h1 { font-size: 34px; max-width: 760px; margin: 0 auto 14px; }
+  .hero p { color:#cbd5e1; max-width:600px; margin:0 auto; font-size:16px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 56px 24px; }
+  .cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top: 40px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:20px; background:var(--bg); }
+  .card h3 { margin:0 0 8px; font-size:16px; }
+  .card p { margin:0; color:var(--muted); font-size:14px; }
+  h2 { font-size:22px; border-bottom:1px solid var(--line); padding-bottom:10px; margin-top:48px; }
+  h3 { font-size:17px; margin-top:26px; }
+  footer { text-align:center; padding: 30px 24px; color: var(--muted); font-size:13px; border-top:1px solid var(--line); }
+  footer a { color: var(--brand); }
+  .contact { background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:20px; margin-top:16px; }
+  section#privacy, section#terms { scroll-margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg viewBox="30 45 120 140" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="75" cy="90" r="35" fill="#1D9E75" opacity="0.6"/>
+      <circle cx="105" cy="115" r="35" fill="#0F6E56" opacity="0.6"/>
+      <circle cx="75" cy="140" r="35" fill="#5DCAA5" opacity="0.6"/>
+      <g transform="translate(60,69)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
+        <path d="M11 0 L22 5.5 L22 16.5 L11 22 L0 16.5 L0 5.5 Z"/>
+        <path d="M0 5.5 L11 11 L22 5.5"/>
+        <path d="M11 11 L11 22"/>
+      </g>
+      <g transform="translate(105,104.5)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
+        <path d="M0 3 L14 3 L14 15 L0 15 Z"/>
+        <path d="M14 7 L20 7 L23 11 L23 15 L14 15"/>
+        <circle cx="5" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
+        <circle cx="19" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
+      </g>
+      <g transform="translate(60,139)" stroke="#ffffff" stroke-width="1.8" fill="none">
+        <circle cx="11" cy="11" r="10.5"/>
+        <path d="M11 5 L11 17 M14.5 7.5 Q11 5.5 8 7.2 Q6 8.5 8 10 Q10 11 12 11.5 Q14.5 12.3 12.5 14.5 Q9.5 16.3 7 14" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <span class="wordmark">Stocklley</span>
+  </div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#privacy">Privacy Policy</a>
+    <a href="#terms">Terms of Service</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Supply chain and inventory management, built for Amazon sellers</h1>
+  <p>Stocklley connects to your Amazon Seller account to plan FBA replenishment, track inventory across your 3PL warehouses, and reconcile Amazon payouts against your own books — all in one place.</p>
+</div>
+
+<div class="wrap" id="about">
+  <h2>What Stocklley does</h2>
+  <p>Stocklley is a supply-chain and inventory management platform for Amazon sellers, and for the agencies and consultants who manage seller accounts on their behalf. It connects to a seller's Amazon account through Amazon's official Selling Partner API, using the seller's own authorization, and combines that data with information from the seller's third-party warehouses and suppliers.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Replenishment planning</h3>
+      <p>Tracks days-of-stock coverage per SKU and recommends when and how much to send to Amazon FBA.</p>
+    </div>
+    <div class="card">
+      <h3>FBA & 3PL inventory</h3>
+      <p>Keeps sellable, inbound, and in-transit stock visible in one ledger, and produces Amazon-compliant packing lists for new shipments.</p>
+    </div>
+    <div class="card">
+      <h3>Finance & reconciliation</h3>
+      <p>Reconciles what Amazon actually pays out against the seller's own bookkeeping, with a full double-entry ledger.</p>
+    </div>
+    <div class="card">
+      <h3>Purchase planning</h3>
+      <p>Plans purchase orders across multiple suppliers based on real demand and lead times.</p>
+    </div>
+  </div>
+
+  <h2 id="privacy">Privacy Policy</h2>
+  <p><em>Last updated: July 2026</em></p>
+
+  <h3>What information we access</h3>
+  <p>When a seller connects their Amazon account to Stocklley, we access only the data covered by the specific permissions ("roles") they approve during Amazon's authorization process — for example, order history, inventory levels, FBA shipment status, and Amazon settlement/payout reports. We never access an Amazon account that hasn't explicitly authorized Stocklley to do so.</p>
+
+  <h3>How we store it</h3>
+  <p>Amazon account credentials (refresh tokens) are encrypted at rest using AES-256-GCM and are never exposed to the browser or to any party outside Stocklley's own backend systems. All data is transmitted over encrypted (HTTPS/TLS) connections.</p>
+
+  <h3>How we use it</h3>
+  <p>Data retrieved from a seller's Amazon account is used exclusively to power that seller's own dashboards, replenishment recommendations, and financial reports inside Stocklley. It is not sold, shared with advertisers, or used to train any product outside of the account it was retrieved for.</p>
+
+  <h3>Who we share it with</h3>
+  <p>We do not share Amazon Information with any outside party. Infrastructure providers (such as our hosting and database providers) process data on our behalf solely to operate the service, under their own standard security and confidentiality commitments, and never access seller data for any independent purpose.</p>
+
+  <h3>Data retention and deletion</h3>
+  <p>A seller may disconnect their Amazon account at any time, which stops all further data syncing. On request, we delete a seller's stored data within a reasonable timeframe, except where retention is required by law.</p>
+
+  <h3>Your rights</h3>
+  <p>Sellers in the UK/EU have rights under GDPR, including the right to access, correct, or delete their data, and to object to certain processing. To exercise these rights, contact us using the details below.</p>
+
+  <h2 id="terms">Terms of Service</h2>
+  <p><em>Last updated: July 2026</em></p>
+
+  <h3>Use of the service</h3>
+  <p>Stocklley is provided to help Amazon sellers and their authorized representatives plan inventory, purchasing, and finance operations. You may only connect Amazon accounts you own or are explicitly authorized to manage.</p>
+
+  <h3>Account responsibilities</h3>
+  <p>You are responsible for keeping your Stocklley login credentials secure and for any activity that occurs under your account. You must notify us promptly if you believe your account has been compromised.</p>
+
+  <h3>Data accuracy</h3>
+  <p>Stocklley's recommendations (replenishment quantities, forecasts, financial reports) are generated from the data Amazon provides and are intended to support, not replace, your own judgment. We are not liable for decisions made solely on the basis of Stocklley's output.</p>
+
+  <h3>Service availability</h3>
+  <p>We aim to keep Stocklley available and reliable but do not guarantee uninterrupted access. We will make reasonable efforts to notify users of planned maintenance or known outages.</p>
+
+  <h3>Termination</h3>
+  <p>You may stop using Stocklley and disconnect your Amazon account at any time. We may suspend or terminate access for accounts that violate these terms or Amazon's own policies governing use of the Selling Partner API.</p>
+
+  <h3>Changes to these terms</h3>
+  <p>We may update these terms from time to time. Continued use of Stocklley after an update constitutes acceptance of the revised terms.</p>
+
+  <h2 id="contact">Contact</h2>
+  <div class="contact">
+    <p><strong>Support & billing:</strong> <a href="mailto:bilalrana8387@gmail.com">bilalrana8387@gmail.com</a></p>
+    <p style="margin-bottom:0;">For privacy requests (access, correction, deletion), please use the same address with the subject line "Privacy Request."</p>
+  </div>
+</div>
+
+<footer>
+  © 2026 Stocklley. All rights reserved. &nbsp;·&nbsp; <a href="#privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="#terms">Terms of Service</a>
+</footer>
+
+</body>
+</html>
