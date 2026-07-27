@@ -3,121 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stocklley — Supply Chain & Inventory Management for Amazon Sellers</title>
-<meta name="description" content="Stocklley helps Amazon sellers and the agencies who manage them plan replenishment, track FBA and 3PL inventory, and reconcile Amazon payouts in one place.">
+<title>Stocklley — Run Your Entire Amazon Business From One Dashboard</title>
+<meta name="description" content="Stocklley replaces the spreadsheets and disconnected tools Amazon sellers stitch together — replenishment, FBA/3PL inventory, real accounting, and purchasing, all in one place.">
 <style>
-  :root { --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --brand:#3f9ba0; --bg:#fafafa; }
+  :root {
+    --ink:#131c27; --muted:#5b6b7c; --muted-2:#8291a1; --line:#e6ebf0;
+    --brand:#3f9ba0; --brand-2:#2d7377; --brand-light:#e6f4f4;
+    --navy:#0e1a24; --navy-2:#16283a; --navy-3:#1f3a4d;
+    --accent:#f2a541; --accent-2:#d98a20;
+    --bg:#f7f9fa; --white:#fff;
+    --r-lg:18px; --r-md:12px; --r-sm:8px;
+    --shadow-sm: 0 1px 2px rgba(14,26,36,0.06), 0 1px 1px rgba(14,26,36,0.04);
+    --shadow-md: 0 8px 24px rgba(14,26,36,0.08), 0 2px 6px rgba(14,26,36,0.05);
+    --shadow-lg: 0 24px 60px rgba(14,26,36,0.16), 0 6px 18px rgba(14,26,36,0.08);
+  }
   * { box-sizing: border-box; }
-  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background:#fff; line-height:1.6; }
-  header { background: #16232e; color:#fff; padding: 12px 24px; display:flex; align-items:center; justify-content:space-between; }
-  header .brand { display:flex; align-items:center; gap:10px; }
-  header .brand svg { display:block; height:52px; width:auto; }
-  header .brand .wordmark { font-family: Georgia, 'DejaVu Serif', serif; font-size:30px; font-weight:600; color:#fff; }
-  header nav a { color:#cbd5e1; text-decoration:none; margin-left:22px; font-size:14px; }
-  header nav a:hover { color:#fff; }
-  header nav a.cta-btn { background:var(--brand); color:#fff; padding:8px 16px; border-radius:6px; font-weight:600; }
-  header nav a.cta-btn:hover { background:#357f83; color:#fff; }
-  .pricing-cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top: 30px; }
-  .pricing-card { border:1px solid var(--line); border-radius:10px; padding:24px; background:var(--bg); text-align:center; }
-  .pricing-card.featured { border-color:var(--brand); box-shadow:0 0 0 2px rgba(63,155,160,0.25); }
-  .pricing-card h3 { margin:0 0 6px; font-size:18px; }
-  .pricing-card .price { font-size:30px; font-weight:700; color:var(--brand); margin:10px 0; }
-  .pricing-card .price span { font-size:14px; color:var(--muted); font-weight:400; }
-  .pricing-card ul { text-align:left; color:var(--muted); font-size:14px; padding-left:18px; margin:14px 0 20px; }
-  .pricing-card button { width:100%; background:var(--brand); color:#fff; border:none; padding:10px 16px; border-radius:6px; font-weight:600; cursor:pointer; font-size:14px; }
-  .pricing-card button:hover { background:#357f83; }
-  #signup-form-wrap { background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:24px; margin-top:24px; max-width:520px; }
-  .field { margin-bottom:14px; }
-  .field label { display:block; font-size:13px; font-weight:600; margin-bottom:5px; }
-  .field input, .field select, .field textarea { width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:6px; font-size:14px; font-family:inherit; }
-  #signup-submit { background:var(--brand); color:#fff; border:none; padding:11px 22px; border-radius:6px; font-weight:600; cursor:pointer; font-size:15px; }
-  #signup-submit:hover { background:#357f83; }
-  #signup-submit:disabled { opacity:0.6; cursor:default; }
-  #signup-status { min-height:20px; font-size:14px; margin-top:12px; }
-  #signup-status.ok { color:#15803d; }
-  #signup-status.err { color:#b91c1c; }
-  #pricing, #signup { scroll-margin-top: 20px; }
-  .hero { background: linear-gradient(135deg,#16232e,#22343f); color:#fff; padding: 64px 24px 56px; text-align:center; }
-  .hero h1 { font-size: 34px; max-width: 760px; margin: 0 auto 14px; }
-  .hero p { color:#cbd5e1; max-width:600px; margin:0 auto; font-size:16px; }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 56px 24px; }
-  .cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top: 40px; }
-  .card { border:1px solid var(--line); border-radius:10px; padding:20px; background:var(--bg); }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background:#fff; line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  img, svg { max-width:100%; }
+  a { text-decoration:none; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 84px 0; }
+  .section.tight { padding: 56px 0; }
+  .eyebrow { display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--brand-2); background:var(--brand-light); border-radius:999px; padding:6px 14px 6px 12px; margin-bottom:18px; }
+  h2.section-title { font-size: clamp(26px,3.4vw,36px); margin:0 0 12px; letter-spacing:-0.01em; }
+  .section-lede { color:var(--muted); font-size:17px; max-width:680px; margin:0 0 40px; }
+  .section-lede.center { margin-left:auto; margin-right:auto; text-align:center; }
+  .center-head { text-align:center; }
+
+  /* ---------- header ---------- */
+  header { position:sticky; top:0; z-index:50; background:rgba(14,26,36,0.92); backdrop-filter:blur(10px); color:#fff; padding: 14px 24px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.06); }
+  header .inner { max-width:1140px; margin:0 auto; width:100%; display:flex; align-items:center; justify-content:space-between; }
+  header .brand { display:flex; align-items:center; gap:9px; }
+  header .brand svg { display:block; height:40px; width:auto; }
+  header .brand .wordmark { font-family: Georgia, 'DejaVu Serif', serif; font-size:23px; font-weight:600; color:#fff; }
+  header nav { display:flex; align-items:center; }
+  header nav a.nav-link { color:#c7d3dd; margin-left:26px; font-size:14.5px; font-weight:500; }
+  header nav a.nav-link:hover { color:#fff; }
+  header nav a.login-link { color:#c7d3dd; margin-left:26px; font-size:14.5px; font-weight:500; }
+  header nav a.login-link:hover { color:#fff; }
+  header nav a.cta-btn { background:var(--accent); color:#1a1204; margin-left:22px; padding:10px 20px; border-radius:8px; font-weight:700; font-size:14.5px; box-shadow:0 4px 14px rgba(242,165,65,0.35); }
+  header nav a.cta-btn:hover { background:#ffb85c; }
+  #nav-toggle { display:none; background:none; border:none; color:#fff; font-size:26px; cursor:pointer; padding:4px 6px; }
+
+  /* ---------- hero ---------- */
+  .hero { position:relative; background:
+      radial-gradient(720px 420px at 88% -10%, rgba(63,155,160,0.35), transparent 60%),
+      radial-gradient(600px 500px at -5% 110%, rgba(242,165,65,0.18), transparent 60%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
+    color:#fff; padding: 76px 0 100px; overflow:hidden; }
+  .hero::before { content:""; position:absolute; inset:0; opacity:.5; background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size:26px 26px; mask-image:linear-gradient(180deg,#000,transparent 75%); pointer-events:none; }
+  .hero .inner { position:relative; display:flex; align-items:center; gap:56px; }
+  .hero-copy { flex: 1 1 480px; min-width:300px; }
+  .hero-graphic { flex: 1 1 420px; min-width:280px; display:flex; justify-content:center; }
+  .hero .eyebrow { background:rgba(255,255,255,0.08); color:#d9f2f2; border:1px solid rgba(255,255,255,0.14); }
+  .hero h1 { font-size: clamp(32px,4.4vw,52px); line-height:1.12; margin:0 0 20px; letter-spacing:-0.01em; }
+  .hero h1 em { font-style:normal; background:linear-gradient(90deg,#7fd6d1,#f2c581); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p.lede { color:#b9c8d3; font-size:18px; max-width:540px; margin:0 0 30px; }
+  .hero-features { list-style:none; margin:0 0 36px; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px 22px; max-width:480px; }
+  .hero-features li { display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; color:#e6eef3; }
+  .hero-features li .dot { width:20px; height:20px; border-radius:50%; background:rgba(63,155,160,0.25); border:1px solid rgba(127,214,209,0.4); flex:none; display:flex; align-items:center; justify-content:center; }
+  .hero-features li .dot::after { content:""; width:6px; height:6px; border-radius:50%; background:#7fd6d1; }
+  .hero-ctas { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .btn-accent { display:inline-block; background:var(--accent); color:#1a1204; padding:14px 26px; border-radius:10px; font-weight:700; font-size:15.5px; box-shadow:0 10px 26px rgba(242,165,65,0.32); border:none; cursor:pointer; }
+  .btn-accent:hover { background:#ffb85c; }
+  .btn-ghost-light { color:#e6eef3; font-weight:600; font-size:15px; display:inline-flex; align-items:center; gap:6px; }
+  .btn-ghost-light:hover { color:#fff; }
+
+  /* hero graphic: flow diagram, not a fake screenshot */
+  .flow-card { position:relative; width:100%; max-width:400px; }
+  .flow-ring { position:absolute; inset:-40px; border-radius:50%; background:radial-gradient(circle, rgba(63,155,160,0.25), transparent 65%); filter:blur(2px); }
+  .flow-panel { position:relative; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:20px; padding:26px; backdrop-filter:blur(6px); }
+  .flow-src { display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; color:#cfe3e3; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:10px 14px; margin-bottom:16px; }
+  .flow-arrow { width:100%; height:26px; display:flex; align-items:center; justify-content:center; color:#7fd6d1; }
+  .flow-outputs { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+  .flow-chip { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:12px; }
+  .flow-chip .flow-num { font-size:19px; font-weight:800; color:#fff; }
+  .flow-chip .flow-lbl { font-size:11.5px; color:#a9bcc7; margin-top:2px; }
+  .flow-badge { position:absolute; bottom:-18px; right:-14px; background:#fff; color:var(--ink); border-radius:14px; padding:12px 16px; box-shadow:var(--shadow-lg); display:flex; align-items:center; gap:10px; }
+  .flow-badge .ic { width:34px; height:34px; border-radius:9px; background:var(--brand-light); display:flex; align-items:center; justify-content:center; flex:none; }
+  .flow-badge strong { display:block; font-size:13.5px; }
+  .flow-badge span { display:block; font-size:11.5px; color:var(--muted); }
+
+  /* ---------- trust strip ---------- */
+  .trust-strip { background:var(--navy-2); border-top:1px solid rgba(255,255,255,0.06); padding:20px 0; }
+  .trust-strip .inner { display:flex; flex-wrap:wrap; gap:26px; justify-content:center; align-items:center; }
+  .trust-item { display:flex; align-items:center; gap:9px; color:#c7d3dd; font-size:13.5px; font-weight:600; }
+  .trust-item svg { flex:none; }
+
+  /* ---------- icon badges (extends logo language) ---------- */
+  .ic-badge { width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center; flex:none; }
+  .ic-teal { background:linear-gradient(135deg,#1D9E75,#0F6E56); }
+  .ic-navy { background:linear-gradient(135deg,#2d4a5e,#16283a); }
+  .ic-amber { background:linear-gradient(135deg,#f2a541,#d98a20); }
+  .ic-slate { background:linear-gradient(135deg,#5b7186,#33475a); }
+
+  /* ---------- roof / consolidation teaser ---------- */
+  .roof-band { background:var(--bg); }
+  .roof-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:36px; }
+  .roof-item { background:#fff; border:1px solid var(--line); border-radius:var(--r-md); padding:20px 16px; text-align:center; box-shadow:var(--shadow-sm); transition:transform .15s ease, box-shadow .15s ease; }
+  .roof-item:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+  .roof-item .ic-badge { margin:0 auto 12px; width:46px; height:46px; border-radius:12px; }
+  .roof-item h4 { margin:0 0 4px; font-size:14.5px; }
+  .roof-item p { margin:0; font-size:12.5px; color:var(--muted); }
+
+  /* ---------- feature rows ---------- */
+  .feature-row { display:flex; align-items:center; gap:56px; padding:56px 0; border-top:1px solid var(--line); }
+  .feature-row:first-of-type { border-top:none; }
+  .feature-row.rev { flex-direction:row-reverse; }
+  .feature-copy { flex:1 1 440px; min-width:280px; }
+  .feature-visual { flex:1 1 420px; min-width:280px; }
+  .feature-copy .ic-badge { margin-bottom:18px; }
+  .feature-copy h3 { font-size:25px; margin:0 0 12px; letter-spacing:-0.01em; }
+  .feature-copy > p { color:var(--muted); font-size:16px; margin:0 0 20px; }
+  .feature-bullets { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+  .feature-bullets li { display:flex; gap:10px; align-items:flex-start; font-size:14.5px; color:var(--ink); }
+  .feature-bullets li svg { flex:none; margin-top:2px; color:var(--brand); }
+
+  .viz-card { background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:22px; box-shadow:var(--shadow-md); }
+  .viz-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .viz-head strong { font-size:13.5px; }
+  .viz-head span { font-size:11.5px; color:var(--muted); background:var(--bg); padding:3px 9px; border-radius:999px; }
+  .viz-bars { display:flex; align-items:flex-end; gap:8px; height:110px; }
+  .viz-bars b { flex:1; border-radius:6px 6px 2px 2px; background:linear-gradient(180deg, var(--brand), var(--brand-2)); }
+  .viz-bars b.low { background:linear-gradient(180deg,#c9d6dc,#aebccb); }
+  .viz-bars b.warn { background:linear-gradient(180deg,var(--accent),var(--accent-2)); }
+  .viz-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; }
+  .viz-kpi { background:var(--bg); border-radius:10px; padding:10px; text-align:center; }
+  .viz-kpi b { display:block; font-size:16px; }
+  .viz-kpi span { font-size:10.5px; color:var(--muted); }
+
+  .viz-ledger-row { display:flex; justify-content:space-between; font-size:13px; padding:9px 0; border-bottom:1px dashed var(--line); }
+  .viz-ledger-row:last-child { border-bottom:none; }
+  .viz-ledger-row .neg { color:#c2410c; }
+  .viz-ledger-row .pos { color:#0f766e; }
+
+  /* ---------- forecasting section ---------- */
+  .forecast-section { background:linear-gradient(180deg,#0e1a24,#16283a); color:#fff; }
+  .forecast-section .section-lede { color:#b9c8d3; }
+  .forecast-section .eyebrow { background:rgba(255,255,255,0.08); color:#d9f2f2; border:1px solid rgba(255,255,255,0.14); }
+  .fc-grid { display:flex; gap:56px; align-items:center; }
+  .fc-copy { flex:1 1 460px; min-width:280px; }
+  .fc-copy p { color:#b9c8d3; font-size:15.5px; }
+  .fc-chip-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
+  .fc-chip { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); border-radius:999px; padding:8px 14px; font-size:12.5px; font-weight:600; color:#dfeaf0; }
+  .fc-visual { flex:1 1 440px; min-width:280px; }
+  .fc-chart-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.14); border-radius:var(--r-lg); padding:24px; }
+
+  /* ---------- replace-your-stack ---------- */
+  .chaos-order { display:flex; gap:36px; align-items:stretch; margin-top:44px; }
+  .co-panel { flex:1; border-radius:var(--r-lg); padding:28px; }
+  .co-before { background:#fbf5ec; border:1.5px dashed #e3c88c; position:relative; overflow:hidden; }
+  .co-after { background:linear-gradient(160deg,#0e1a24,#1f3a4d); color:#fff; box-shadow:var(--shadow-lg); }
+  .co-label { font-size:12px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; margin-bottom:18px; }
+  .co-before .co-label { color:#a9701f; }
+  .co-after .co-label { color:#9fe0dc; }
+  .chaos-chips { position:relative; height:210px; }
+  .chaos-chip { position:absolute; background:#fff; border:1px solid #ecdcbd; border-radius:10px; padding:8px 12px; font-size:12.5px; font-weight:700; color:#7a5a24; box-shadow:0 4px 10px rgba(120,90,30,0.12); }
+  .co-after-center { display:flex; flex-direction:column; align-items:center; text-align:center; padding:14px 0 6px; }
+  .co-after-center .ic-badge { width:64px; height:64px; border-radius:18px; margin-bottom:14px; }
+  .co-after-center h4 { margin:0 0 6px; font-size:18px; }
+  .co-after-center p { margin:0; color:#b9c8d3; font-size:13.5px; }
+  .co-after-list { list-style:none; margin:20px 0 0; padding:0; display:grid; gap:9px; }
+  .co-after-list li { display:flex; gap:8px; align-items:center; font-size:13px; color:#e6eef3; }
+  .co-after-list li svg { flex:none; color:#7fd6d1; }
+
+  .compare-table-wrap { overflow-x:auto; margin-top:44px; border-radius:var(--r-lg); box-shadow:var(--shadow-md); }
+  table.compare-table { width:100%; border-collapse:separate; border-spacing:0; min-width:600px; background:#fff; }
+  table.compare-table th { text-align:left; font-size:12.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); padding:16px 22px; background:var(--bg); }
+  table.compare-table th:first-child { border-radius:var(--r-lg) 0 0 0; }
+  table.compare-table th:last-child { border-radius:0 var(--r-lg) 0 0; }
+  table.compare-table td { padding:16px 22px; font-size:14.5px; border-top:1px solid var(--line); }
+  table.compare-table td.old-way { color:var(--muted); }
+  table.compare-table td.new-way { color:var(--ink); font-weight:600; }
+  table.compare-table td svg { margin-right:8px; vertical-align:-3px; flex:none; }
+  table.compare-table tr:last-child td:first-child { border-radius:0 0 0 var(--r-lg); }
+  table.compare-table tr:last-child td:last-child { border-radius:0 0 var(--r-lg) 0; }
+
+  /* ---------- roadmap ---------- */
+  .cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:20px; margin-top: 36px; }
+  .card { border:1px solid var(--line); border-radius:var(--r-md); padding:22px; background:#fff; box-shadow:var(--shadow-sm); transition:transform .15s ease, box-shadow .15s ease; }
+  .card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
   .card h3 { margin:0 0 8px; font-size:16px; }
-  .card p { margin:0; color:var(--muted); font-size:14px; }
+  .card p { margin:0; color:var(--muted); font-size:13.5px; }
+  .badge { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--brand-2); background:var(--brand-light); border-radius:999px; padding:3px 10px; margin-bottom:10px; }
+
+  /* ---------- pricing ---------- */
+  .pricing-cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:24px; margin-top: 36px; align-items:stretch; }
+  .pricing-card { position:relative; border:1px solid var(--line); border-radius:var(--r-lg); padding:30px 26px; background:#fff; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; }
+  .pricing-card.featured { border-color:var(--brand); box-shadow:var(--shadow-lg); transform:translateY(-8px); }
+  .pricing-ribbon { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--accent); color:#1a1204; font-size:11.5px; font-weight:800; letter-spacing:.03em; text-transform:uppercase; padding:5px 14px; border-radius:999px; box-shadow:0 4px 10px rgba(242,165,65,0.35); }
+  .pricing-card h3 { margin:6px 0 2px; font-size:19px; }
+  .pricing-card .price { font-size:34px; font-weight:800; color:var(--ink); margin:12px 0 4px; }
+  .pricing-card .price span { font-size:14px; color:var(--muted); font-weight:500; }
+  .pricing-card ul { text-align:left; color:var(--muted); font-size:14px; padding-left:0; margin:16px 0 24px; list-style:none; display:grid; gap:9px; flex:1; }
+  .pricing-card ul li { display:flex; gap:8px; align-items:flex-start; }
+  .pricing-card ul li svg { flex:none; margin-top:3px; color:var(--brand); }
+  .pricing-card button { width:100%; background:var(--ink); color:#fff; border:none; padding:13px 16px; border-radius:var(--r-sm); font-weight:700; cursor:pointer; font-size:14.5px; }
+  .pricing-card.featured button { background:var(--accent); color:#1a1204; }
+  .pricing-card button:hover { opacity:.9; }
+
+  /* ---------- signup ---------- */
+  #signup-form-wrap { background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:30px; margin-top:24px; max-width:560px; box-shadow:var(--shadow-md); }
+  .field { margin-bottom:16px; }
+  .field label { display:block; font-size:13px; font-weight:700; margin-bottom:6px; }
+  .field input, .field select, .field textarea { width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:var(--r-sm); font-size:14.5px; font-family:inherit; background:var(--bg); }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:2px solid var(--brand); outline-offset:1px; background:#fff; }
+  #signup-submit { background:var(--accent); color:#1a1204; border:none; padding:13px 26px; border-radius:var(--r-sm); font-weight:800; cursor:pointer; font-size:15px; }
+  #signup-submit:hover { background:#ffb85c; }
+  #signup-submit:disabled { opacity:0.6; cursor:default; }
+  #signup-status { min-height:20px; font-size:14px; margin-top:14px; }
+  #signup-status.ok { color:#15803d; font-weight:600; }
+  #signup-status.err { color:#b91c1c; font-weight:600; }
+  #pricing, #signup, #roadmap, #about, #privacy, #terms, #contact, #features, #forecasting, #stack { scroll-margin-top: 76px; }
+
   h2 { font-size:22px; border-bottom:1px solid var(--line); padding-bottom:10px; margin-top:48px; }
   h3 { font-size:17px; margin-top:26px; }
-  footer { text-align:center; padding: 30px 24px; color: var(--muted); font-size:13px; border-top:1px solid var(--line); }
-  footer a { color: var(--brand); }
-  .contact { background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:20px; margin-top:16px; }
-  section#privacy, section#terms { scroll-margin-top: 20px; }
-  .badge { display:inline-block; font-size:11px; font-weight:600; letter-spacing:.03em; text-transform:uppercase; color:var(--brand); background:rgba(63,155,160,0.12); border-radius:999px; padding:3px 10px; margin-bottom:8px; }
-  #roadmap { scroll-margin-top: 20px; }
+  .contact { background:var(--bg); border:1px solid var(--line); border-radius:var(--r-md); padding:22px; margin-top:16px; }
+
+  footer { background:var(--navy); color:#a9bcc7; padding: 48px 24px 28px; }
+  footer .inner { max-width:1140px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; }
+  footer .foot-top { max-width:1140px; margin:0 auto 28px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; }
+  footer .foot-brand { display:flex; align-items:center; gap:9px; }
+  footer .foot-brand svg { height:32px; width:auto; }
+  footer .foot-brand span { font-family: Georgia, 'DejaVu Serif', serif; font-size:19px; font-weight:600; color:#fff; }
+  footer a { color:#c7d3dd; font-size:13.5px; }
+  footer a:hover { color:#fff; }
+  footer p { font-size:12.5px; margin:0; }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 860px) {
+    header nav.desktop-nav { display:none; }
+    #nav-toggle { display:block; }
+    .mobile-nav { position:fixed; inset:64px 0 0 0; background:var(--navy); z-index:49; padding:24px; display:none; flex-direction:column; gap:4px; overflow-y:auto; }
+    .mobile-nav.open { display:flex; }
+    .mobile-nav a { color:#e6eef3; font-size:17px; font-weight:600; padding:14px 6px; border-bottom:1px solid rgba(255,255,255,0.08); }
+    .mobile-nav a.cta-btn { background:var(--accent); color:#1a1204; border-radius:10px; text-align:center; margin-top:12px; border-bottom:none; }
+    .hero .inner { flex-direction:column; text-align:left; gap:40px; }
+    .hero-graphic { width:100%; }
+    .hero-features { max-width:none; grid-template-columns:1fr 1fr; }
+    .flow-card { max-width:340px; }
+    .roof-grid { grid-template-columns:repeat(2,1fr); }
+    .feature-row, .feature-row.rev { flex-direction:column; gap:28px; padding:40px 0; }
+    .fc-grid { flex-direction:column; }
+    .chaos-order { flex-direction:column; }
+    table.compare-table { min-width:520px; }
+    .section { padding:56px 0; }
+  }
+  @media (max-width: 520px) {
+    .hero-features { grid-template-columns:1fr; }
+    .roof-grid { grid-template-columns:1fr 1fr; }
+    .hero-ctas { flex-direction:column; align-items:stretch; }
+    .btn-accent { text-align:center; }
+    header .brand .wordmark { font-size:19px; }
+    .wrap { padding:0 18px; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">
-    <svg viewBox="30 45 120 140" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="75" cy="90" r="35" fill="#1D9E75" opacity="0.6"/>
-      <circle cx="105" cy="115" r="35" fill="#0F6E56" opacity="0.6"/>
-      <circle cx="75" cy="140" r="35" fill="#5DCAA5" opacity="0.6"/>
-      <g transform="translate(60,69)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
-        <path d="M11 0 L22 5.5 L22 16.5 L11 22 L0 16.5 L0 5.5 Z"/>
-        <path d="M0 5.5 L11 11 L22 5.5"/>
-        <path d="M11 11 L11 22"/>
-      </g>
-      <g transform="translate(105,104.5)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
-        <path d="M0 3 L14 3 L14 15 L0 15 Z"/>
-        <path d="M14 7 L20 7 L23 11 L23 15 L14 15"/>
-        <circle cx="5" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
-        <circle cx="19" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
-      </g>
-      <g transform="translate(60,139)" stroke="#ffffff" stroke-width="1.8" fill="none">
-        <circle cx="11" cy="11" r="10.5"/>
-        <path d="M11 5 L11 17 M14.5 7.5 Q11 5.5 8 7.2 Q6 8.5 8 10 Q10 11 12 11.5 Q14.5 12.3 12.5 14.5 Q9.5 16.3 7 14" stroke-linecap="round"/>
-      </g>
-    </svg>
-    <span class="wordmark">Stocklley</span>
+  <div class="inner">
+    <div class="brand">
+      <svg viewBox="30 45 120 140" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="75" cy="90" r="35" fill="#1D9E75" opacity="0.6"/>
+        <circle cx="105" cy="115" r="35" fill="#0F6E56" opacity="0.6"/>
+        <circle cx="75" cy="140" r="35" fill="#5DCAA5" opacity="0.6"/>
+        <g transform="translate(60,69)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
+          <path d="M11 0 L22 5.5 L22 16.5 L11 22 L0 16.5 L0 5.5 Z"/>
+          <path d="M0 5.5 L11 11 L22 5.5"/>
+          <path d="M11 11 L11 22"/>
+        </g>
+        <g transform="translate(105,104.5)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
+          <path d="M0 3 L14 3 L14 15 L0 15 Z"/>
+          <path d="M14 7 L20 7 L23 11 L23 15 L14 15"/>
+          <circle cx="5" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
+          <circle cx="19" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
+        </g>
+        <g transform="translate(60,139)" stroke="#ffffff" stroke-width="1.8" fill="none">
+          <circle cx="11" cy="11" r="10.5"/>
+          <path d="M11 5 L11 17 M14.5 7.5 Q11 5.5 8 7.2 Q6 8.5 8 10 Q10 11 12 11.5 Q14.5 12.3 12.5 14.5 Q9.5 16.3 7 14" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <span class="wordmark">Stocklley</span>
+    </div>
+    <nav class="desktop-nav">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#forecasting" class="nav-link">Forecasting</a>
+      <a href="#stack" class="nav-link">Why Stocklley</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="https://app.stocklley.com" class="login-link">Log In</a>
+      <a href="#signup" class="cta-btn">Sign Up</a>
+    </nav>
+    <button id="nav-toggle" aria-label="Menu">☰</button>
   </div>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#roadmap">Roadmap</a>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#features">Features</a>
+    <a href="#forecasting">Forecasting</a>
+    <a href="#stack">Why Stocklley</a>
     <a href="#pricing">Pricing</a>
     <a href="#contact">Contact</a>
     <a href="https://app.stocklley.com">Log In</a>
     <a href="#signup" class="cta-btn">Sign Up</a>
-  </nav>
+  </div>
 </header>
 
 <div class="hero">
-  <h1>Supply chain and inventory management, built for Amazon sellers</h1>
-  <p>Stocklley connects to your Amazon Seller account to plan FBA replenishment, track inventory across your 3PL warehouses, and reconcile Amazon payouts against your own books — all in one place.</p>
-</div>
-
-<div class="wrap" id="about">
-  <h2>What Stocklley does</h2>
-  <p>Stocklley is a supply-chain and inventory management platform for Amazon sellers, and for the agencies and consultants who manage seller accounts on their behalf. It connects to a seller's Amazon account through Amazon's official Selling Partner API, using the seller's own authorization, and combines that data with information from the seller's third-party warehouses and suppliers.</p>
-
-  <div class="cards">
-    <div class="card">
-      <h3>Replenishment planning</h3>
-      <p>Tracks days-of-stock coverage per SKU and recommends when and how much to send to Amazon FBA.</p>
+  <div class="wrap inner">
+    <div class="hero-copy">
+      <span class="eyebrow">For Amazon sellers &amp; the agencies who manage them</span>
+      <h1>Run your entire Amazon business from <em>one dashboard</em> — not five.</h1>
+      <p class="lede">Stocklley replaces the spreadsheets, sticky notes, and disconnected apps most Amazon sellers stitch together. Replenishment, FBA &amp; 3PL inventory, real accounting, and purchasing — under one roof, talking to each other automatically.</p>
+      <ul class="hero-features">
+        <li><span class="dot"></span> Replenishment that plans itself</li>
+        <li><span class="dot"></span> FBA + 3PL in one ledger</li>
+        <li><span class="dot"></span> Real double-entry accounting</li>
+        <li><span class="dot"></span> Purchasing across every supplier</li>
+      </ul>
+      <div class="hero-ctas">
+        <a href="#signup" class="btn-accent">Sign Up</a>
+        <a href="#features" class="btn-ghost-light">See how it works &nbsp;›</a>
+      </div>
     </div>
-    <div class="card">
-      <h3>FBA & 3PL inventory</h3>
-      <p>Keeps sellable, inbound, and in-transit stock visible in one ledger, and produces Amazon-compliant packing lists for new shipments.</p>
-    </div>
-    <div class="card">
-      <h3>Finance & reconciliation</h3>
-      <p>Reconciles what Amazon actually pays out against the seller's own bookkeeping, with a full double-entry ledger.</p>
-    </div>
-    <div class="card">
-      <h3>Purchase planning</h3>
-      <p>Plans purchase orders across multiple suppliers based on real demand and lead times.</p>
+    <div class="hero-graphic">
+      <div class="flow-card">
+        <div class="flow-ring"></div>
+        <div class="flow-panel">
+          <div class="flow-src">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7fd6d1" stroke-width="2"><path d="M4 8l8-4 8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4"/></svg>
+            Your Amazon Seller account
+          </div>
+          <div class="flow-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v14M6 13l6 6 6-6"/></svg>
+          </div>
+          <div class="flow-outputs">
+            <div class="flow-chip"><div class="flow-num">Auto</div><div class="flow-lbl">Replenishment plans</div></div>
+            <div class="flow-chip"><div class="flow-num">1</div><div class="flow-lbl">Inventory ledger</div></div>
+            <div class="flow-chip"><div class="flow-num">Real</div><div class="flow-lbl">Payout reconciliation</div></div>
+            <div class="flow-chip"><div class="flow-num">Split</div><div class="flow-lbl">Purchase orders</div></div>
+          </div>
+        </div>
+        <div class="flow-badge">
+          <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+          <div><strong>Forecast-aware</strong><span>Not a flat average</span></div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+<div class="trust-strip">
+  <div class="wrap inner">
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd6d1" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg> Connects via Amazon's official Selling Partner API</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd6d1" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg> AES-256 encryption at rest</div>
+    <div class="trust-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7fd6d1" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> You approve every data connection</div>
+  </div>
+</div>
+
+<div class="section roof-band">
+  <div class="wrap">
+    <div class="center-head">
+      <span class="eyebrow">Everything under one roof</span>
+      <h2 class="section-title">Stop switching between five different tools to run one business</h2>
+      <p class="section-lede center">Most Amazon sellers run their operation across a spreadsheet, a separate inventory tracker, a bookkeeping app that doesn't talk to Amazon, and a notebook full of supplier notes. Stocklley folds all of it into a single login.</p>
+    </div>
+    <div class="roof-grid">
+      <div class="roof-item">
+        <div class="ic-badge ic-teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4v16h16"/><path d="M8 15l3-4 3 3 4-6"/></svg></div>
+        <h4>Replenishment</h4>
+        <p>Days-of-stock, per SKU</p>
+      </div>
+      <div class="roof-item">
+        <div class="ic-badge ic-navy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></div>
+        <h4>FBA + 3PL</h4>
+        <p>One inventory ledger</p>
+      </div>
+      <div class="roof-item">
+        <div class="ic-badge ic-amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 15h3"/></svg></div>
+        <h4>Finance</h4>
+        <p>Real double-entry books</p>
+      </div>
+      <div class="roof-item">
+        <div class="ic-badge ic-slate"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/><path d="M3 4h2l2.4 11.5a2 2 0 002 1.5h7.2a2 2 0 002-1.6L20 8H6.2"/></svg></div>
+        <h4>Purchasing</h4>
+        <p>Split across suppliers</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="features">
+  <div class="wrap">
+    <div class="center-head">
+      <span class="eyebrow">What Stocklley actually does</span>
+      <h2 class="section-title">Built around the four things that actually run an Amazon business</h2>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-copy">
+        <div class="ic-badge ic-teal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4v16h16"/><path d="M8 15l3-4 3 3 4-6"/></svg></div>
+        <h3>Know exactly what to reorder — and when</h3>
+        <p>No more eyeballing a spreadsheet to guess whether a SKU needs reordering this week or next month. Stocklley tracks real days-of-stock coverage per SKU and tells you the moment something needs attention.</p>
+        <ul class="feature-bullets">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Per-SKU days-of-stock, updated automatically</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Lead-time aware across every supplier</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Out-of-stock warnings before they cost you sales</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="viz-card">
+          <div class="viz-head"><strong>Days of stock — by SKU</strong><span>Live</span></div>
+          <div class="viz-bars">
+            <b style="height:80%"></b><b class="warn" style="height:28%"></b><b style="height:64%"></b><b style="height:92%"></b><b class="low" style="height:15%"></b><b style="height:55%"></b><b style="height:70%"></b>
+          </div>
+          <div class="viz-kpis">
+            <div class="viz-kpi"><b>212</b><span>SKUs tracked</span></div>
+            <div class="viz-kpi"><b>6</b><span>Need reorder</span></div>
+            <div class="viz-kpi"><b>0</b><span>Stockouts</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row rev">
+      <div class="feature-copy">
+        <div class="ic-badge ic-navy"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></div>
+        <h3>One inventory ledger, every warehouse</h3>
+        <p>FBA, Amazon Warehousing &amp; Distribution, Amazon Logistics, and your own 3PL partners — Stocklley keeps sellable, inbound, and in-transit stock visible in one place, so you're never checking four different portals to answer "how much do I actually have."</p>
+        <ul class="feature-bullets">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> FBA, AWD, Amazon Logistics &amp; 3PL, unified</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Amazon-compliant packing lists, generated for you</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Shipment manifests formatted for US and UK</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="viz-card">
+          <div class="viz-head"><strong>Stock by location</strong><span>Consolidated</span></div>
+          <div class="viz-ledger-row"><span>FBA — sellable</span><span class="pos">18,420 units</span></div>
+          <div class="viz-ledger-row"><span>In-transit to FBA</span><span>3,120 units</span></div>
+          <div class="viz-ledger-row"><span>AWD storage</span><span>9,860 units</span></div>
+          <div class="viz-ledger-row"><span>3PL warehouse (own)</span><span>5,240 units</span></div>
+          <div class="viz-ledger-row"><span><strong>Total network stock</strong></span><span class="pos"><strong>36,640 units</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-copy">
+        <div class="ic-badge ic-amber"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 15h3"/></svg></div>
+        <h3>Know your real numbers, not Amazon's rounded ones</h3>
+        <p>Amazon's payout report isn't a set of books. Stocklley reconciles every settlement against a full double-entry ledger — chart of accounts, journal entries, P&amp;L, balance sheet, cash flow — so what you see is what actually happened financially.</p>
+        <ul class="feature-bullets">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Real double-entry accounting, not a summary</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Amazon settlements reconciled automatically</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> FIFO / LIFO / weighted-average costing built in</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="viz-card">
+          <div class="viz-head"><strong>This month's reconciliation</strong><span>Matched</span></div>
+          <div class="viz-ledger-row"><span>Amazon settlement payout</span><span class="pos">$41,206.18</span></div>
+          <div class="viz-ledger-row"><span>Cost of goods sold</span><span class="neg">-$16,840.00</span></div>
+          <div class="viz-ledger-row"><span>FBA &amp; referral fees</span><span class="neg">-$9,112.40</span></div>
+          <div class="viz-ledger-row"><span>Ad spend</span><span class="neg">-$3,940.75</span></div>
+          <div class="viz-ledger-row"><span><strong>Net profit</strong></span><span class="pos"><strong>$11,313.03</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row rev">
+      <div class="feature-copy">
+        <div class="ic-badge ic-slate"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/><path d="M3 4h2l2.4 11.5a2 2 0 002 1.5h7.2a2 2 0 002-1.6L20 8H6.2"/></svg></div>
+        <h3>Purchase orders that write themselves</h3>
+        <p>Split a SKU's production across multiple suppliers and Stocklley allocates purchase orders automatically, based on each supplier's share, lead time, and cost — no more manually splitting quantities in a spreadsheet before every reorder.</p>
+        <ul class="feature-bullets">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Multi-supplier sourcing mix per SKU</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Automatic split allocation across suppliers</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Timed against each supplier's own lead time</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="viz-card">
+          <div class="viz-head"><strong>Sourcing mix — Micro Towel 3-Pack</strong><span>Auto-split</span></div>
+          <div class="viz-ledger-row"><span>Supplier A — 20 day lead time</span><span>60% · 3,000 units</span></div>
+          <div class="viz-ledger-row"><span>Supplier B — 12 day lead time</span><span>40% · 2,000 units</span></div>
+          <div class="viz-ledger-row"><span>Next PO recommended</span><span class="pos">In 6 days</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section forecast-section" id="forecasting">
+  <div class="wrap">
+    <div class="fc-grid">
+      <div class="fc-copy">
+        <span class="eyebrow">Forecasting</span>
+        <h2 class="section-title" style="border:none;margin-top:0;">Forecasting that understands your business, not just your spreadsheet</h2>
+        <p>A promotion hits. A listing goes viral. A competitor runs out of stock and orders triple overnight. Most tools either overreact to every blip or smooth everything into a flat average that misses real demand shifts entirely.</p>
+        <p>Stocklley is built to tell the difference. It looks at your actual sales history month by month, recognizes genuine spikes versus one-off noise, and automatically excludes periods when a listing was out of stock — so a past stockout doesn't quietly drag down your forecast for months afterward. New listings are treated differently from established ones, so a slow first month right after launch never gets mistaken for weak demand.</p>
+        <p><strong>The result:</strong> replenishment recommendations that reflect what your business is actually doing right now — not a generic average of the last twelve months.</p>
+        <div class="fc-chip-row">
+          <span class="fc-chip">Spike vs. noise detection</span>
+          <span class="fc-chip">Stockout-aware history</span>
+          <span class="fc-chip">Launch-date aware</span>
+        </div>
+      </div>
+      <div class="fc-visual">
+        <div class="fc-chart-card">
+          <svg viewBox="0 0 420 220" width="100%" height="auto">
+            <line x1="0" y1="190" x2="420" y2="190" stroke="rgba(255,255,255,0.15)"/>
+            <polyline points="0,150 40,155 80,145 120,150 160,120 200,60 240,110 280,100 320,90 360,80 400,70" fill="none" stroke="#3a5a6b" stroke-width="2" stroke-dasharray="4 4"/>
+            <polyline points="0,150 40,155 80,145 120,150 160,125 200,58 240,140 280,132 320,120 360,100 400,88" fill="none" stroke="#7fd6d1" stroke-width="3"/>
+            <circle cx="200" cy="58" r="6" fill="#f2a541" stroke="#0e1a24" stroke-width="2"/>
+            <line x1="200" y1="58" x2="200" y2="20" stroke="#f2a541" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <text x="150" y="14" fill="#f2c581" font-size="12" font-family="inherit">Real spike — kept</text>
+            <circle cx="240" cy="140" r="4" fill="#5b7186"/>
+            <line x1="240" y1="140" x2="240" y2="175" stroke="#5b7186" stroke-width="1.2" stroke-dasharray="2 3"/>
+            <text x="245" y="205" fill="#8291a1" font-size="11" font-family="inherit">Noise — smoothed out</text>
+          </svg>
+          <div class="fc-chip-row" style="margin-top:6px;">
+            <span class="fc-chip" style="background:rgba(127,214,209,0.12);border-color:rgba(127,214,209,0.3);">— Forecast used for replenishment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="stack">
+  <div class="wrap">
+    <div class="center-head">
+      <span class="eyebrow">Why Stocklley</span>
+      <h2 class="section-title">Replace the spreadsheets. Replace the sticky notes. Replace the guesswork.</h2>
+      <p class="section-lede center">Stocklley isn't another point solution to add to the pile. It's built to replace the general-purpose accounting software, inventory spreadsheets, and disconnected tools that weren't designed for how Amazon businesses actually operate.</p>
+    </div>
+
+    <div class="chaos-order">
+      <div class="co-panel co-before">
+        <div class="co-label">Without Stocklley</div>
+        <div class="chaos-chips">
+          <div class="chaos-chip" style="top:4%; left:6%; transform:rotate(-7deg);">Reorder spreadsheet</div>
+          <div class="chaos-chip" style="top:2%; left:52%; transform:rotate(5deg);">Bookkeeping software</div>
+          <div class="chaos-chip" style="top:32%; left:20%; transform:rotate(3deg);">FBA shipment tool</div>
+          <div class="chaos-chip" style="top:38%; left:60%; transform:rotate(-4deg);">Supplier email threads</div>
+          <div class="chaos-chip" style="top:64%; left:4%; transform:rotate(6deg);">Sticky notes</div>
+          <div class="chaos-chip" style="top:68%; left:46%; transform:rotate(-3deg);">Separate logins ×5</div>
+        </div>
+      </div>
+      <div class="co-panel co-after">
+        <div class="co-label">With Stocklley</div>
+        <div class="co-after-center">
+          <div class="ic-badge ic-teal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+          <h4>One dashboard. One login.</h4>
+          <p>Everything connected, automatically.</p>
+          <ul class="co-after-list">
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Replenishment planning</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> FBA / 3PL inventory</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Real accounting</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Purchase planning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead><tr><th>The old way</th><th>With Stocklley</th></tr></thead>
+        <tbody>
+          <tr><td class="old-way">A spreadsheet guessing at reorder points</td><td class="new-way">✓ Automatic replenishment recommendations, per SKU</td></tr>
+          <tr><td class="old-way">A separate tool just for FBA shipments</td><td class="new-way">✓ FBA + 3PL + AWD inventory in one ledger</td></tr>
+          <tr><td class="old-way">Bookkeeping done after the fact, disconnected from Amazon</td><td class="new-way">✓ Real double-entry accounting, reconciled straight from Amazon payouts</td></tr>
+          <tr><td class="old-way">Guessing which sales spikes were even real</td><td class="new-way">✓ Forecasting that tells real demand spikes from noise</td></tr>
+          <tr><td class="old-way">Chasing suppliers and splitting POs by hand</td><td class="new-way">✓ Purchase planning across every supplier, automatically split</td></tr>
+          <tr><td class="old-way">Four or five different logins to check on your business</td><td class="new-way">✓ One dashboard. Everything connected.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section tight" style="background:var(--bg);" id="fba-suppliers">
+  <div class="wrap">
+    <div class="feature-row" style="border:none; padding:0;">
+      <div class="feature-copy">
+        <span class="eyebrow">FBA planning &amp; suppliers</span>
+        <h2 class="section-title" style="border:none; margin-top:0;">From purchase order to Amazon's warehouse — without a spreadsheet in between</h2>
+        <p style="color:var(--muted); font-size:16px;">Once stock lands, it flows straight into your FBA shipment plan — packed into Amazon-compliant shipments with manifests already formatted for US or UK requirements, ready to send. No manual box-count math, no re-keying numbers into Seller Central by hand.</p>
+        <ul class="feature-bullets">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Multi-supplier sourcing mix, managed per SKU</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Amazon-compliant packing lists &amp; shipment manifests</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> US (in/lb) and UK (cm/kg) formats handled automatically</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="viz-card">
+          <div class="viz-head"><strong>FBA Planner</strong><span>Ready to ship</span></div>
+          <div class="viz-ledger-row"><span>Shipment #FBA-1042</span><span class="pos">Finalized</span></div>
+          <div class="viz-ledger-row"><span>Boxes</span><span>14</span></div>
+          <div class="viz-ledger-row"><span>Units</span><span>2,240</span></div>
+          <div class="viz-ledger-row"><span>Manifest format</span><span>US · in / lb</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="about" style="padding-top:0;">
 
   <h2 id="roadmap">What's coming next</h2>
   <p>Stocklley started as an operations backbone for Amazon sellers — inventory, replenishment, and real accounting in one place. We're now extending that same backbone into advertising performance and multi-channel selling. Here's what's actively on our roadmap:</p>
@@ -157,22 +649,23 @@
       <h3>Starter</h3>
       <div class="price">$49<span>/mo</span></div>
       <ul>
-        <li>Replenishment planning</li>
-        <li>FBA inventory tracking</li>
-        <li>Payout reconciliation</li>
-        <li>1 connected Amazon account</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Replenishment planning</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> FBA inventory tracking</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Payout reconciliation</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> 1 connected Amazon account</li>
       </ul>
       <button type="button" class="plan-select-btn" data-plan="Starter ($49/mo)">Sign Up</button>
     </div>
     <div class="pricing-card featured">
+      <div class="pricing-ribbon">Most popular</div>
       <h3>Growth</h3>
       <div class="price">$99<span>/mo</span></div>
       <ul>
-        <li>Everything in Starter</li>
-        <li>3PL / AWD / Amazon Logistics inventory</li>
-        <li>Full accounting ledger (AP/AR, statements)</li>
-        <li>Split-sourcing purchase planning</li>
-        <li>Up to 3 connected Amazon accounts</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Everything in Starter</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> 3PL / AWD / Amazon Logistics inventory</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Full accounting ledger (AP/AR, statements)</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Split-sourcing purchase planning</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Up to 3 connected Amazon accounts</li>
       </ul>
       <button type="button" class="plan-select-btn" data-plan="Growth ($99/mo)">Sign Up</button>
     </div>
@@ -180,11 +673,11 @@
       <h3>Agency / Pro</h3>
       <div class="price">$199<span>/mo</span></div>
       <ul>
-        <li>Everything in Growth</li>
-        <li>Unlimited connected Amazon accounts</li>
-        <li>PPC optimization + competitive intelligence</li>
-        <li>Budgeting &amp; forecasting</li>
-        <li>Priority support</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Everything in Growth</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Unlimited connected Amazon accounts</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> PPC optimization + competitive intelligence</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Budgeting &amp; forecasting</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg> Priority support</li>
       </ul>
       <button type="button" class="plan-select-btn" data-plan="Agency/Pro ($199/mo)">Sign Up</button>
     </div>
@@ -262,10 +755,55 @@
 </div>
 
 <footer>
-  © 2026 Stocklley. All rights reserved. &nbsp;·&nbsp; <a href="#privacy">Privacy Policy</a> &nbsp;·&nbsp; <a href="#terms">Terms of Service</a>
+  <div class="foot-top">
+    <div class="foot-brand">
+      <svg viewBox="30 45 120 140" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="75" cy="90" r="35" fill="#1D9E75" opacity="0.6"/>
+        <circle cx="105" cy="115" r="35" fill="#0F6E56" opacity="0.6"/>
+        <circle cx="75" cy="140" r="35" fill="#5DCAA5" opacity="0.6"/>
+        <g transform="translate(60,69)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
+          <path d="M11 0 L22 5.5 L22 16.5 L11 22 L0 16.5 L0 5.5 Z"/>
+          <path d="M0 5.5 L11 11 L22 5.5"/>
+          <path d="M11 11 L11 22"/>
+        </g>
+        <g transform="translate(105,104.5)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none">
+          <path d="M0 3 L14 3 L14 15 L0 15 Z"/>
+          <path d="M14 7 L20 7 L23 11 L23 15 L14 15"/>
+          <circle cx="5" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
+          <circle cx="19" cy="17.5" r="2.5" fill="#ffffff" stroke="none"/>
+        </g>
+        <g transform="translate(60,139)" stroke="#ffffff" stroke-width="1.8" fill="none">
+          <circle cx="11" cy="11" r="10.5"/>
+          <path d="M11 5 L11 17 M14.5 7.5 Q11 5.5 8 7.2 Q6 8.5 8 10 Q10 11 12 11.5 Q14.5 12.3 12.5 14.5 Q9.5 16.3 7 14" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <span>Stocklley</span>
+    </div>
+    <div style="display:flex; gap:32px; flex-wrap:wrap;">
+      <a href="#features">Features</a>
+      <a href="#forecasting">Forecasting</a>
+      <a href="#stack">Why Stocklley</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="inner">
+    <p>© 2026 Stocklley. All rights reserved.</p>
+    <div style="display:flex; gap:20px;">
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Service</a>
+    </div>
+  </div>
 </footer>
 
 <script>
+  document.getElementById("nav-toggle").addEventListener("click", function () {
+    document.getElementById("mobile-nav").classList.toggle("open");
+  });
+  document.querySelectorAll(".mobile-nav a").forEach(function (a) {
+    a.addEventListener("click", function () { document.getElementById("mobile-nav").classList.remove("open"); });
+  });
+
   document.querySelectorAll(".plan-select-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       document.getElementById("su-plan").value = btn.getAttribute("data-plan");
