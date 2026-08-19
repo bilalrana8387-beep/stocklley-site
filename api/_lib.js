@@ -168,6 +168,7 @@ footer a { color:#cbd5e1; text-decoration:none; }
     <nav class="desktop-nav">
       <a href="https://www.stocklley.com/#features" class="nav-link">Features</a>
       <a href="https://www.stocklley.com/#forecasting" class="nav-link">Forecasting</a>
+      <a href="https://www.stocklley.com/#stack" class="nav-link">Why Stocklley</a>
       <a href="/blog" class="nav-link">Blog</a>
       <a href="https://www.stocklley.com/#pricing" class="nav-link">Pricing</a>
       <a href="https://app.stocklley.com" class="login-link">Log In</a>
