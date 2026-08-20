@@ -101,16 +101,16 @@
       radial-gradient(720px 420px at 88% -10%, rgba(63,155,160,0.35), transparent 60%),
       radial-gradient(600px 500px at -5% 110%, rgba(242,165,65,0.18), transparent 60%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
-    color:#fff; padding: 76px 0 100px; overflow:hidden; }
+    color:#fff; padding: clamp(32px,6vh,76px) 0 clamp(40px,8vh,100px); overflow:hidden; }
   .hero::before { content:""; position:absolute; inset:0; opacity:.5; background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size:26px 26px; mask-image:linear-gradient(180deg,#000,transparent 75%); pointer-events:none; }
   .hero .inner { position:relative; display:flex; align-items:center; gap:56px; }
   .hero-copy { flex: 1 1 480px; min-width:300px; }
   .hero-graphic { flex: 1 1 420px; min-width:280px; display:flex; justify-content:center; }
   .hero .eyebrow { background:rgba(255,255,255,0.08); color:#d9f2f2; border:1px solid rgba(255,255,255,0.14); }
-  .hero h1 { font-size: clamp(32px,4.4vw,52px); line-height:1.12; margin:0 0 20px; letter-spacing:-0.01em; }
+  .hero h1 { font-size: clamp(32px,4.4vw,52px); line-height:1.12; margin:0 0 clamp(12px,2.5vh,20px); letter-spacing:-0.01em; }
   .hero h1 em { font-style:normal; background:linear-gradient(90deg,#7fd6d1,#f2c581); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .hero p.lede { color:#b9c8d3; font-size:18px; max-width:540px; margin:0 0 30px; }
-  .hero-features { list-style:none; margin:0 0 36px; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px 22px; max-width:480px; }
+  .hero p.lede { color:#b9c8d3; font-size:18px; max-width:540px; margin:0 0 clamp(16px,3vh,30px); }
+  .hero-features { list-style:none; margin:0 0 clamp(18px,3.5vh,36px); padding:0; display:grid; grid-template-columns:1fr 1fr; gap:12px 22px; max-width:480px; }
   .hero-features li { display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:600; color:#e6eef3; }
   .hero-features li .dot { width:20px; height:20px; border-radius:50%; background:rgba(63,155,160,0.25); border:1px solid rgba(127,214,209,0.4); flex:none; display:flex; align-items:center; justify-content:center; }
   .hero-features li .dot::after { content:""; width:6px; height:6px; border-radius:50%; background:#7fd6d1; }
